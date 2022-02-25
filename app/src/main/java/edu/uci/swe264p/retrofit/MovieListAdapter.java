@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     MovieListAdapter(List<Movie> movies) {
         this.movies = movies;
     }
-
 
     // Declare ViewHolder class to display single movie with a view
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,16 +39,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     // Create a new ViewHolder with its corresponding layout
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_row, parent, false);
-        return new ViewHolder(view);
+        return new MovieListAdapter.ViewHolder(view);
     }
 
     // Bind the info of single movie to a view
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        holder.ivPoster.setImageResource();
+        // Load poster to imageView
+        String POSTER_PATH = "https://image.tmdb.org/t/p/w500/" + movie.getPosterPath();
+        Picasso.get().load(POSTER_PATH).into(holder.ivPoster);
+
+        // Set all textView
         holder.tvTitle.setText(movie.getTitle());
         holder.tvReleaseDate.setText(movie.getReleaseDate());
         holder.tvVote.setText(movie.getVoteAverage().toString());
