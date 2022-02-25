@@ -22,13 +22,17 @@ public class MovieListActivity extends AppCompatActivity {
     private String BASE_URL = "https://api.themoviedb.org/3/";
     static Retrofit retrofit = null;
     final static String API_KEY = "dcdcde5d90ff7ac28e020269684102c5";
+    List<Movie> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
+        connect();
+        setRecyclerView();
+    }
 
-        List<Movie> movieList = new ArrayList<>();
+    private void connect(){
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -47,10 +51,8 @@ public class MovieListActivity extends AppCompatActivity {
                     String releaseDate = response.body().getResult().get(i).getReleaseDate().toString();
                     String overView = response.body().getResult().get(i).getOverview();
                     movieList.add(new Movie(voteAverage, posterPath, title, releaseDate, overView));
-                    System.out.println("======== movie: " + (i + 1) + " =============");
-                    System.out.println("Title: " + title + ". Vote: " + voteAverage);
-
                 }
+                setRecyclerView();
             }
 
             @Override
@@ -58,11 +60,14 @@ public class MovieListActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         });
+    }
 
+
+
+    private void setRecyclerView(){
         recyclerView = findViewById(R.id.rvMovieList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MovieListAdapter(movieList));
-
     }
 }
