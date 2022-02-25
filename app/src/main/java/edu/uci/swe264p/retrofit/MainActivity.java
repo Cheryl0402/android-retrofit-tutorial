@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     static final String TAG = MainActivity.class.getSimpleName();
     static final String BASE_URL = "https://api.themoviedb.org/3/";
     static Retrofit retrofit = null;
-    final static String API_KEY = "YOUR_API_KEY";
+//    final static String API_KEY = "YOUR_API_KEY";
+    final static String API_KEY = "dcdcde5d90ff7ac28e020269684102c5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 int[] ids = {R.id.txtTitle, R.id.txtReleaseDate, R.id.txtPoster,
                         R.id.txtVote, R.id.txtOverview};
-                String[] values = {
+                String[] values ={
                         response.body().getTitle(),
                         response.body().getReleaseDate(),
                         response.body().getPosterPath(),
