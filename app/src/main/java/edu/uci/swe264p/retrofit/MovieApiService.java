@@ -11,8 +11,8 @@ public interface MovieApiService {
     @GET("movie/{id}")
     Call<Movie> getMovie(@Path("id") int id, @Query("api_key") String apiKey);
 
-    // TODO :  add one more method for the above API
+    // Get top_rated movies
     @GET("movie/top_rated")
     Call<TopRatedResponse> getTopRatedResponse(@Query("api_key") String apiKey);
-    // returns a list of movies that are top rated.
+
 }
